@@ -1,0 +1,163 @@
+{
+    "states": [
+      {
+        "name": "Global",
+        "expressions": [
+          {
+            "regular_expression": "VAR1\\s*=\\s*\\S+.POST\\.get\\(\\'.+?\\'\\)",
+            "processing": "Jump",
+            "token_id": "eval_vulnerability",
+            "target_state": "Eval_Vulnerability",
+            "is_var": "True",
+            "vars": "VAR1"
+          },
+          {
+            "regular_expression": "VAR1\\s*=\\s*\\S+.GET\\.get\\(\\'.+?\\'\\)",
+            "processing": "Jump",
+            "token_id": "eval_vulnerability",
+            "target_state": "Eval_Vulnerability",
+            "is_var": "True",
+            "vars": "VAR1"
+          },
+          {
+            "regular_expression": "eval\\([^)]*request\\.[^)]*\\.get[^)]*\\)",
+            "processing": "Return_token",
+            "token_id": "eval_vulnerability"
+            },
+          {
+            "regular_expression": "eval\\([^)]*request\\.[^)]*\\)",
+            "processing": "Return_token",
+            "token_id": "eval_vulnerability"
+  
+          },
+          {
+            "regular_expression": "send_mail\\([^)]*html_message=[^)]*\\)",
+            "processing": "Return_token",
+            "token_id": "Xss-send-mail-html-message"
+            },
+            {
+            "regular_expression": "django.core.mail",
+            "processing": "Return_token",
+            "token_id": "django.core.mail"
+            },
+          {
+              "regular_expression": "open\\(os\\.path\\.join\\([^)]*request\\.[^)]*\\)\\)",
+              "processing": "Return_token",
+              "token_id": "Path-traversal-join"
+            },
+            {
+              "regular_expression": "os\\.path\\.join\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Path-traversal-join"
+            },
+            {
+              "regular_expression": "open\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Path-traversal-join"
+            },
+            {
+              "regular_expression": "objects.extra\\([^)]*where[^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Sql-injection-using-extra-where"
+            },
+            {
+              "regular_expression": "objects.extra\\([^)]*WHERE[^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Sql-injection-using-extra-where"
+            },
+            {
+              "regular_expression": "django.db.models.expressions",
+              "processing": "Return_token",
+              "token_id": "django.db.models.expressions"
+            },
+            {
+              "regular_expression": "RawSQL\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Sql-injection-using-rawsql"
+            },
+            {
+              "regular_expression": "objects.raw\\([^)]*where[^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Sql-injection-using-raw"
+            },
+            {
+              "regular_expression": "objects.raw\\([^)]*WHERE[^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Sql-injection-using-raw"
+            },
+            {
+              "regular_expression": "get\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Sql-injection-using-raw"
+            },
+            {
+              "regular_expression": "urlopen\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "Ssrf-injection-urllib"
+            },
+            {
+              "regular_expression": "urllib.request",
+              "processing": "Return_token",
+              "token_id": "urllib.request"
+            },
+          {
+              "regular_expression": "exec\\([^)]*request\\.[^)]*\\.get[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "exec Vulnerability"
+            },
+            {
+              "regular_expression": "exec\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_jump",
+              "token_id": "exec Vulnerability"
+            },
+            {
+              "regular_expression": "exec\\([^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "possible exec vulnerability"
+            },
+          {
+              "regular_expression": "os.system\\([^)]*request\\.[^)]*\\.get[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "os.system Vulnerability"
+            },
+            {
+              "regular_expression": "os.system\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "os.system Vulnerability"
+            },
+            {
+              "regular_expression": "os.system\\([^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "possible os.system vulnerability"
+            },
+          {
+              "regular_expression": "EmailMessage\\([^)]*request\\.[^)]*\\.get[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "xss-html-email-body Vulnerability"
+            },
+            {
+              "regular_expression": "EmailMessage\\([^)]*request\\.[^)]*\\)",
+              "processing": "Return_token",
+              "token_id": "xss-html-email-body Vulnerability"
+            },
+            {
+              "regular_expression": "EmailMessage\\.[^)]*",
+              "processing": "Return_token",
+              "token_id": "possible xss-html-email-body vulnerability"
+            }
+        ]
+      },
+      {
+        "name": "Eval_Vulnerability",
+        "expressions": [
+          {
+            "regular_expression": "eval\\(VAR1\\)",
+            "processing": "Return_token",
+            "token_id": "eval_vulnerability",
+            "identified_variables": "VAR1"
+          }
+        ]
+      }
+    ]
+  }
+  
